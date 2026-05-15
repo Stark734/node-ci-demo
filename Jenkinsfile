@@ -5,20 +5,20 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t node-ci-demo .'
+                sh 'docker build -t node-ci-demo .'
             }
         }
 
         stage('Stop Old Container') {
             steps {
-                bat 'docker stop node-app || exit 0'
-                bat 'docker rm node-app || exit 0'
+                sh 'docker stop node-app || true'
+                sh 'docker rm node-app || true'
             }
         }
 
         stage('Run New Container') {
             steps {
-                bat 'docker run -d -p 3000:3000 --name node-app node-ci-demo'
+                sh 'docker run -d -p 3000:3000 --name node-app node-ci-demo'
             }
         }
     }
